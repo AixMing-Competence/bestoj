@@ -7,24 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 用户角色枚举
+ * 题目提交编程语言枚举
  *
  * @author AixMing
+ * @since 2025-03-17 17:16:59
  */
-public enum UserRoleEnum {
+public enum QuestionSubmitLanguageEnum {
 
-    /**
-     * 用户角色：user/admin/ban
-     */
-    USER("用户", "user"),
-    ADMIN("管理员", "admin"),
-    BAN("被封号", "ban");
+    JAVA("java", "java"),
+    CPLUSPLUS("c++", "c++"),
+    GOLANG("golang", "golang");
 
     private final String text;
-
     private final String value;
 
-    UserRoleEnum(String text, String value) {
+    QuestionSubmitLanguageEnum(String text, String value) {
         this.text = text;
         this.value = value;
     }
@@ -44,11 +41,11 @@ public enum UserRoleEnum {
      * @param value
      * @return
      */
-    public static UserRoleEnum getEnumByValue(String value) {
+    public static QuestionSubmitLanguageEnum getEnumByValue(String value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (UserRoleEnum anEnum : UserRoleEnum.values()) {
+        for (QuestionSubmitLanguageEnum anEnum : values()) {
             if (anEnum.value.equals(value)) {
                 return anEnum;
             }
@@ -56,11 +53,11 @@ public enum UserRoleEnum {
         return null;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public String getText() {
         return text;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

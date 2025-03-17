@@ -1,5 +1,6 @@
 ### Custom template
 node_modules
+/.idea
 ### Java template
 # Compiled class file
 *.class
