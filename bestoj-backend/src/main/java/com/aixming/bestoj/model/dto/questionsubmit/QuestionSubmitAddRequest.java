@@ -1,6 +1,5 @@
 package com.aixming.bestoj.model.dto.questionsubmit;
 
-import com.aixming.bestoj.model.entity.JudgeInfo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,11 +21,6 @@ public class QuestionSubmitAddRequest implements Serializable {
      * 用户代码
      */
     private String code;
-
-    /**
-     * 判题信息（json 对象）
-     */
-    private JudgeInfo judgeInfo;
 
     /**
      * 题目 id

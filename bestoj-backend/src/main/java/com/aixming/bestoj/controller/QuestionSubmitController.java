@@ -37,10 +37,28 @@ import jakarta.servlet.http.HttpServletRequest;
 public class QuestionSubmitController {
 
     @Resource
-    private QuestionSubmitService questionsubmitService;
+    private QuestionSubmitService questionSubmitService;
 
     @Resource
     private UserService userService;
+
+    /**
+     * 提交题目
+     *
+     * @param questionSubmitAddRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/")
+    public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest, HttpServletRequest request) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 是否登录
+        User loginUser = userService.getLoginUser(request);
+        long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        return ResultUtils.success(questionSubmitId);
+    }
 
     // region 增删改查
 
@@ -56,13 +74,12 @@ public class QuestionSubmitController {
         ThrowUtils.throwIf(questionsubmitAddRequest == null, ErrorCode.PARAMS_ERROR);
         QuestionSubmit questionSubmit = new QuestionSubmit();
         BeanUtils.copyProperties(questionsubmitAddRequest, questionSubmit);
-        questionSubmit.setJudgeInfo(JSONUtil.toJsonStr(questionsubmitAddRequest.getJudgeInfo()));
         // 数据校验
-        questionsubmitService.validQuestionSubmit(questionSubmit, true);
+        questionSubmitService.validQuestionSubmit(questionSubmit, true);
         User loginUser = userService.getLoginUser(request);
         questionSubmit.setUserId(loginUser.getId());
         // 写入数据库
-        boolean result = questionsubmitService.save(questionSubmit);
+        boolean result = questionSubmitService.save(questionSubmit);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         // 返回新写入的数据 id
         long newQuestionSubmitId = questionSubmit.getId();
@@ -84,14 +101,14 @@ public class QuestionSubmitController {
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
-        QuestionSubmit oldQuestionSubmit = questionsubmitService.getById(id);
+        QuestionSubmit oldQuestionSubmit = questionSubmitService.getById(id);
         ThrowUtils.throwIf(oldQuestionSubmit == null, ErrorCode.NOT_FOUND_ERROR);
         // 仅本人或管理员可删除
         if (!oldQuestionSubmit.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         // 操作数据库
-        boolean result = questionsubmitService.removeById(id);
+        boolean result = questionSubmitService.removeById(id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
@@ -112,13 +129,13 @@ public class QuestionSubmitController {
         BeanUtils.copyProperties(questionsubmitUpdateRequest, questionsubmit);
         questionsubmit.setJudgeInfo(JSONUtil.toJsonStr(questionsubmitUpdateRequest.getJudgeInfo()));
         // 数据校验
-        questionsubmitService.validQuestionSubmit(questionsubmit, false);
+        questionSubmitService.validQuestionSubmit(questionsubmit, false);
         // 判断是否存在
         long id = questionsubmitUpdateRequest.getId();
-        QuestionSubmit oldQuestionSubmit = questionsubmitService.getById(id);
+        QuestionSubmit oldQuestionSubmit = questionSubmitService.getById(id);
         ThrowUtils.throwIf(oldQuestionSubmit == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
-        boolean result = questionsubmitService.updateById(questionsubmit);
+        boolean result = questionSubmitService.updateById(questionsubmit);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
@@ -133,10 +150,10 @@ public class QuestionSubmitController {
     public BaseResponse<QuestionSubmitVO> getQuestionSubmitVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        QuestionSubmit questionsubmit = questionsubmitService.getById(id);
+        QuestionSubmit questionsubmit = questionSubmitService.getById(id);
         ThrowUtils.throwIf(questionsubmit == null, ErrorCode.NOT_FOUND_ERROR);
         // 获取封装类
-        return ResultUtils.success(questionsubmitService.getQuestionSubmitVO(questionsubmit, request));
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVO(questionsubmit, request));
     }
 
     /**
@@ -151,8 +168,8 @@ public class QuestionSubmitController {
         long current = questionsubmitQueryRequest.getCurrent();
         long size = questionsubmitQueryRequest.getPageSize();
         // 查询数据库
-        Page<QuestionSubmit> questionsubmitPage = questionsubmitService.page(new Page<>(current, size),
-                questionsubmitService.getQueryWrapper(questionsubmitQueryRequest));
+        Page<QuestionSubmit> questionsubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionsubmitQueryRequest));
         return ResultUtils.success(questionsubmitPage);
     }
 
@@ -171,10 +188,10 @@ public class QuestionSubmitController {
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        Page<QuestionSubmit> questionsubmitPage = questionsubmitService.page(new Page<>(current, size),
-                questionsubmitService.getQueryWrapper(questionsubmitQueryRequest));
+        Page<QuestionSubmit> questionsubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionsubmitQueryRequest));
         // 获取封装类
-        return ResultUtils.success(questionsubmitService.getQuestionSubmitVOPage(questionsubmitPage, request));
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionsubmitPage, request));
     }
 
     /**
@@ -196,10 +213,10 @@ public class QuestionSubmitController {
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        Page<QuestionSubmit> questionsubmitPage = questionsubmitService.page(new Page<>(current, size),
-                questionsubmitService.getQueryWrapper(questionsubmitQueryRequest));
+        Page<QuestionSubmit> questionsubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionsubmitQueryRequest));
         // 获取封装类
-        return ResultUtils.success(questionsubmitService.getQuestionSubmitVOPage(questionsubmitPage, request));
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionsubmitPage, request));
     }
 
     /**
@@ -218,18 +235,18 @@ public class QuestionSubmitController {
         BeanUtils.copyProperties(questionsubmitEditRequest, questionsubmit);
         questionsubmit.setJudgeInfo(JSONUtil.toJsonStr(questionsubmitEditRequest));
         // 数据校验
-        questionsubmitService.validQuestionSubmit(questionsubmit, false);
+        questionSubmitService.validQuestionSubmit(questionsubmit, false);
         User loginUser = userService.getLoginUser(request);
         // 判断是否存在
         long id = questionsubmitEditRequest.getId();
-        QuestionSubmit oldQuestionSubmit = questionsubmitService.getById(id);
+        QuestionSubmit oldQuestionSubmit = questionSubmitService.getById(id);
         ThrowUtils.throwIf(oldQuestionSubmit == null, ErrorCode.NOT_FOUND_ERROR);
         // 仅本人或管理员可编辑
         if (!oldQuestionSubmit.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         // 操作数据库
-        boolean result = questionsubmitService.updateById(questionsubmit);
+        boolean result = questionSubmitService.updateById(questionsubmit);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }

@@ -37,7 +37,7 @@ public class CosManager {
     // bean 加载完成后执行
     @PostConstruct
     public void init() {
-        System.out.println("Bean 初始化成功");
+        // System.out.println("CosManager Bean 初始化成功");
         // 多线程并发上传下载
         // 自定义线程池大小，建议在客户端与 COS 网络充足（例如使用腾讯云的 CVM，同地域上传 COS）的情况下，设置成16或32即可，可较充分的利用网络资源
         // 对于使用公网传输且网络带宽质量不高的情况，建议减小该值，避免因网速过慢，造成请求超时。

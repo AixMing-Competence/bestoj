@@ -1,7 +1,7 @@
 package com.aixming.bestoj.model.vo;
 
 import cn.hutool.json.JSONUtil;
-import com.aixming.bestoj.model.entity.JudgeInfo;
+import com.aixming.bestoj.judge.codesandbox.model.JudgeInfo;
 import com.aixming.bestoj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

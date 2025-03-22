@@ -1,9 +1,6 @@
 package com.aixming.bestoj.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.aixming.bestoj.common.ErrorCode;
 import com.aixming.bestoj.constant.CommonConstant;
 import com.aixming.bestoj.exception.ThrowUtils;
@@ -16,13 +13,16 @@ import com.aixming.bestoj.model.vo.UserVO;
 import com.aixming.bestoj.service.QuestionService;
 import com.aixming.bestoj.service.UserService;
 import com.aixming.bestoj.utils.SqlUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,36 +76,45 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         }
 
         Long id = questionQueryRequest.getId();
-        Long notId = questionQueryRequest.getNotId();
         String title = questionQueryRequest.getTitle();
         String content = questionQueryRequest.getContent();
+        List<String> tags = questionQueryRequest.getTags();
+        String answer = questionQueryRequest.getAnswer();
+        Integer submitNum = questionQueryRequest.getSubmitNum();
+        Integer acceptedNum = questionQueryRequest.getAcceptedNum();
+        Integer thumbNum = questionQueryRequest.getThumbNum();
+        Integer favourNum = questionQueryRequest.getFavourNum();
+        Long userId = questionQueryRequest.getUserId();
+        Long notId = questionQueryRequest.getNotId();
         String searchText = questionQueryRequest.getSearchText();
         String sortField = questionQueryRequest.getSortField();
         String sortOrder = questionQueryRequest.getSortOrder();
-        List<String> tagList = questionQueryRequest.getTags();
-        Long userId = questionQueryRequest.getUserId();
 
-        // 从多字段中搜索
+        // 搜索字段
         if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
+            queryWrapper.like("title", searchText).or().like("content", searchText);
         }
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
         queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
+        queryWrapper.like(StringUtils.isNotBlank(answer), "answer", answer);
         // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
+        if (CollectionUtils.isNotEmpty(tags)) {
+            for (String tag : tags) {
                 queryWrapper.like("tags", "\"" + tag + "\"");
             }
         }
         // 精确查询
         queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(submitNum), "submitNum", submitNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(acceptedNum), "acceptedNum", acceptedNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(thumbNum), "thumbNum", thumbNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(favourNum), "favourNum", favourNum);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
-                sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
+                CommonConstant.SORT_ORDER_ASC.equals(sortOrder),
                 sortField);
         return queryWrapper;
     }

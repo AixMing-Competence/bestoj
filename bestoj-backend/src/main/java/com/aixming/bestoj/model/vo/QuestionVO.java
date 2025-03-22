@@ -40,11 +40,6 @@ public class QuestionVO implements Serializable {
     private List<String> tags;
 
     /**
-     * 题目答案
-     */
-    private String answer;
-
-    /**
      * 题目提交数
      */
     private Integer submitNum;
@@ -83,11 +78,6 @@ public class QuestionVO implements Serializable {
      * 创建时间
      */
     private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
     /**
      * 是否删除

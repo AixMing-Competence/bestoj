@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 题目提交枚举
  * @author AixMing
  * @since 2025-03-17 17:44:57
  */
 @Getter
-public enum QuestionSubmitEnum {
+public enum QuestionSubmitStatusEnum {
     /**
      * 判题状态（0 - 待判题、1 - 判题中、2 - 成功、3 - 失败）
      */
@@ -25,7 +26,7 @@ public enum QuestionSubmitEnum {
 
     private final Integer value;
 
-    QuestionSubmitEnum(String text, Integer value) {
+    QuestionSubmitStatusEnum(String text, Integer value) {
         this.text = text;
         this.value = value;
     }
@@ -36,7 +37,7 @@ public enum QuestionSubmitEnum {
      * @return
      */
     public static List<Integer> getValues() {
-        return Arrays.stream(values()).map(QuestionSubmitEnum::getValue).collect(Collectors.toList());
+        return Arrays.stream(values()).map(QuestionSubmitStatusEnum::getValue).collect(Collectors.toList());
     }
 
     /**
@@ -45,11 +46,11 @@ public enum QuestionSubmitEnum {
      * @param value
      * @return
      */
-    public static QuestionSubmitEnum getEnumByValue(Integer value) {
+    public static QuestionSubmitStatusEnum getEnumByValue(Integer value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (QuestionSubmitEnum anEnum : values()) {
+        for (QuestionSubmitStatusEnum anEnum : values()) {
             if (anEnum.value.equals(value)) {
                 return anEnum;
             }

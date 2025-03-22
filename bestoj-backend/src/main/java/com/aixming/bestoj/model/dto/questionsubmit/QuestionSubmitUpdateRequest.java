@@ -1,6 +1,6 @@
 package com.aixming.bestoj.model.dto.questionsubmit;
 
-import com.aixming.bestoj.model.entity.JudgeInfo;
+import com.aixming.bestoj.judge.codesandbox.model.JudgeInfo;
 import lombok.Data;
 
 import java.io.Serializable;

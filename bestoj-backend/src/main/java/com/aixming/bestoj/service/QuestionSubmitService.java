@@ -1,7 +1,9 @@
 package com.aixming.bestoj.service;
 
+import com.aixming.bestoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.aixming.bestoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.aixming.bestoj.model.entity.QuestionSubmit;
+import com.aixming.bestoj.model.entity.User;
 import com.aixming.bestoj.model.vo.QuestionSubmitVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,7 +21,7 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
      * 校验数据
      *
      * @param questionsubmit
-     * @param add 对创建的数据进行校验
+     * @param add            对创建的数据进行校验
      */
     void validQuestionSubmit(QuestionSubmit questionsubmit, boolean add);
 
@@ -30,7 +32,7 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
      * @return
      */
     QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionsubmitQueryRequest);
-    
+
     /**
      * 获取题目提交封装
      *
@@ -49,4 +51,12 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
      */
     Page<QuestionSubmitVO> getQuestionSubmitVOPage(Page<QuestionSubmit> questionsubmitPage, HttpServletRequest request);
 
+    /**
+     * 提交题目
+     *
+     * @param questionSubmitAddRequest
+     * @param loginUser
+     * @return
+     */
+    long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser);
 }

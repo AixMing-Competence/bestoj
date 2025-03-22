@@ -1,4 +1,4 @@
-package com.aixming.bestoj.model.entity;
+package com.aixming.bestojcodesandbox.model;
 
 import lombok.Data;
 
