@@ -58,6 +58,7 @@ public class ProcessUtil {
             // 等待程序执行，获取状态码
             int exitCode = process.waitFor();
             executeMessage.setExitCode(exitCode);
+            // 正常退出
             if (exitCode == 0) {
                 System.out.println(operation + "成功");
                 // 打印输出信息
@@ -71,7 +72,7 @@ public class ProcessUtil {
                 reader.close();
             } else {
                 // 编译失败
-                System.out.println(operation + "失败");
+                System.out.println(operation + "失败，错误码："+exitCode);
                 // 打印输出信息
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 StringBuilder compileOutputStringBuilder = new StringBuilder();
@@ -112,7 +113,7 @@ public class ProcessUtil {
         try {
             StopWatch stopWatch = new StopWatch();
             stopWatch.start();
-            // 向进程输入命令
+            // 向进程输入参数
             String[] argsSplit = args.split(" ");
             // 插入回车键，代表执行当前命令
             String join = StrUtil.join("\n", argsSplit) + "\n";

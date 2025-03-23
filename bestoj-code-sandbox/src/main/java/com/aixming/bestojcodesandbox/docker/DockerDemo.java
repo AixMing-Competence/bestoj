@@ -29,7 +29,6 @@ public class DockerDemo {
                 .build();
 
         DockerClient dockerClient = DockerClientImpl.getInstance(config, httpClient);
-
         // 拉取镜像
         String image = "nginx:latest";
         PullImageCmd pullImageCmd = dockerClient.pullImageCmd(image);
@@ -45,7 +44,7 @@ public class DockerDemo {
 
         // 创建容器
         CreateContainerCmd containerCmd = dockerClient.createContainerCmd(image);
-        // 创建容器时控制台输出
+        // 创建容器时输出信息到日志
         CreateContainerResponse createContainerResponse = containerCmd.withCmd("echo", "Hello Docker").exec();
         System.out.println(createContainerResponse);
         String containerId = createContainerResponse.getId();
@@ -61,7 +60,7 @@ public class DockerDemo {
         LogContainerResultCallback logContainerResultCallback = new LogContainerResultCallback() {
             @Override
             public void onNext(Frame item) {
-                System.out.println("日志：" + item.getPayload());
+                System.out.println("日志：" + new String(item.getPayload()));
                 super.onNext(item);
             }
         };
@@ -71,7 +70,7 @@ public class DockerDemo {
                 .exec(logContainerResultCallback)
                 .awaitCompletion();
         // 删除容器
-        dockerClient.removeContainerCmd(containerId).exec();
+        dockerClient.removeContainerCmd(containerId).withForce(true).exec();
         // 删除镜像
         dockerClient.removeImageCmd(image).exec();
     }

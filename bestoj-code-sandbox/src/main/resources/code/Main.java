@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int a = Integer.parseInt(args[0]), b = args[1];
-        System.out.println(a + b);
+        int a = scanner.nextInt(), b = scanner.nextInt();
+        System.out.print(a + b);
         scanner.close();
     }
 }

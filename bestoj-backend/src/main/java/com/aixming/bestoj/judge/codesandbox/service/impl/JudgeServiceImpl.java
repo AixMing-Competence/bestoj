@@ -60,7 +60,7 @@ public class JudgeServiceImpl implements JudgeService {
         }
         // 修改状态为“判题中”，防止重复执行
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
-        questionSubmitUpdate.setUserId(questionId);
+        questionSubmitUpdate.setId(questionSubmitId);
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.JUDGING.getValue());
         boolean update = questionSubmitService.updateById(questionSubmitUpdate);
         ThrowUtils.throwIf(!update, ErrorCode.SYSTEM_ERROR, "题目提交状态更新失败");

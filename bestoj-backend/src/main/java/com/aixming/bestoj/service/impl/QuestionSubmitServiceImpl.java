@@ -17,6 +17,7 @@ import com.aixming.bestoj.model.vo.QuestionSubmitVO;
 import com.aixming.bestoj.service.QuestionService;
 import com.aixming.bestoj.service.QuestionSubmitService;
 import com.aixming.bestoj.service.UserService;
+import com.aixming.bestoj.utils.SqlUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -106,7 +107,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 
         // 排序规则
         queryWrapper.orderBy(
-                StringUtils.isNotBlank(sortField),
+                SqlUtils.validSortField(sortField),
                 CommonConstant.SORT_ORDER_ASC.equals(sortOrder),
                 sortField
         );
