@@ -30,9 +30,14 @@
 import { reactive } from "vue";
 import { UserControllerService, UserLoginRequest } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useLoginUserStore } from "@/store/userStore";
 
 const router = useRouter();
+
+const route = useRoute();
+
+const loginUserStore = useLoginUserStore();
 
 const form = reactive({
   userAccount: "",
@@ -45,8 +50,10 @@ const form = reactive({
 const handleSubmit = async () => {
   const res = await UserControllerService.userLogin(form);
   if (res.code === 0) {
+    // 更新 store 中的用户登录信息
+    await loginUserStore.fetchLoginUser();
     Message.success("登录成功");
-    router.push("/");
+    router.replace(`${route.query.redirect ?? "/"}`);
   } else {
     Message.error("登录失败，" + res.message);
   }
