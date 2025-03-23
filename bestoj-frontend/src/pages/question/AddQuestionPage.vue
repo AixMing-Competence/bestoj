@@ -86,9 +86,7 @@
       </a-form-item>
       <div style="margin-top: 16px"></div>
       <a-form-item>
-        <a-button html-type="submit" type="primary" @click="handleSubmit">
-          提交
-        </a-button>
+        <a-button html-type="submit" type="primary"> 提交</a-button>
       </a-form-item>
     </a-form>
     {{ form }}
@@ -116,7 +114,7 @@ const props = withDefaults(defineProps<Props>(), {
   id: () => "",
 });
 
-const form = ref<QuestionAddRequest | QuestionUpdateRequest>({
+const form = ref<QuestionAddRequest>({
   judgeConfig: {},
   judgeCase: [],
 });

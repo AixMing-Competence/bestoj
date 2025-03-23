@@ -4,7 +4,6 @@
     ref="codeEditorRef"
     style="min-height: 400px; height: 70vh"
   />
-  {{ value }}
   <!--  <a-button @click="fillValue">填充值</a-button>-->
 </template>
 

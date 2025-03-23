@@ -7,6 +7,7 @@ import AddQuestionPage from "@/pages/question/AddQuestionPage.vue";
 import ManageQuestionPage from "@/pages/question/ManageQuestionPage.vue";
 import QuestionViewPage from "@/pages/question/ViewQuestionPage.vue";
 import DoQuestionPage from "@/pages/question/doQuestionPage.vue";
+import QuestionSubmitPage from "@/pages/question/QuestionSubmitPage.vue";
 
 export const routes = [
   { path: "/", name: "主页", component: HomePage },
@@ -67,5 +68,10 @@ export const routes = [
     meta: {
       hideInMenu: true,
     },
+  },
+  {
+    path: "/question_submit",
+    name: "浏览题目并提交",
+    component: QuestionSubmitPage,
   },
 ];

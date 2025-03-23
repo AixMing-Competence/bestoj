@@ -2,10 +2,15 @@ const { defineConfig } = require("@vue/cli-service");
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 
 module.exports = defineConfig({
-  devServer: {
-    historyApiFallback: true,
-    allowedHosts: "all",
-  },
+  // devServer: {
+  //   historyApiFallback: true,
+  //   allowedHosts: "all",
+  //   proxy: {
+  //     "/": {
+  //       ws: false,
+  //     },
+  //   },
+  // },
   transpileDependencies: true,
   chainWebpack: (config) => {
     config.plugin("monaco-editor").use(MonacoWebpackPlugin, [

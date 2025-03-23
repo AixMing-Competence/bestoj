@@ -32,6 +32,7 @@ const value = ref("");
 
 const handleChange = (v: string) => {
   value.value = v;
+  props.handleChange(value.value);
 };
 </script>
 
