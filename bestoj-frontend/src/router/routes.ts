@@ -87,6 +87,9 @@ export const routes = [
     path: "/question_submit",
     name: "浏览题目并提交",
     component: QuestionSubmitPage,
+    meta: {
+      access: ACCESS_ENUM.USER,
+    },
   },
   {
     path: "/test",

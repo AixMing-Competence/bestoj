@@ -1,7 +1,7 @@
 <template>
   <div id="addQuestionPage">
     <h2 style="margin-bottom: 32px">设置题目</h2>
-    <a-form :model="form" :style="{ width: '600px' }" @submit="handleSubmit">
+    <a-form :model="form" @submit="handleSubmit">
       <a-form-item field="id" label="题目 id">
         {{ form.id }}
       </a-form-item>
@@ -98,7 +98,6 @@ import { defineProps, ref, watchEffect, withDefaults } from "vue";
 import {
   QuestionAddRequest,
   QuestionControllerService,
-  QuestionUpdateRequest,
 } from "../../../generated";
 import MdEditor from "@/components/editor/MdEditor.vue";
 import { Message } from "@arco-design/web-vue";

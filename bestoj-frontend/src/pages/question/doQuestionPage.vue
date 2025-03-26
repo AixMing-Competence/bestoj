@@ -122,7 +122,6 @@ const loadData = async () => {
   );
   if (res.code === 0 && res.data) {
     question.value = res.data;
-    console.log(question.value);
   } else {
     Message.error("加载题目失败，" + res.message);
   }

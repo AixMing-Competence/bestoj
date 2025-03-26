@@ -8,6 +8,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/bestoj-code-sandbox/pom.xml" />
+        <option value="$PROJECT_DIR$/bestoj-backend-microservice/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

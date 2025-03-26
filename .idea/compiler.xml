@@ -7,8 +7,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bestoj-backend-judge-service" />
+        <module name="bestoj-backend-question-service" />
+        <module name="bestoj-backend-service-client" />
+        <module name="bestoj-backend-gateway" />
+        <module name="bestoj-backend-user-service" />
+        <module name="bestoj-backend-common" />
+        <module name="bestoj-backend-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bestoj-backend-question-service" options="-parameters" />
+      <module name="bestoj-backend-user-service" options="-parameters" />
+    </option>
   </component>
 </project>

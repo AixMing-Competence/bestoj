@@ -56,11 +56,8 @@
 import moment from "moment/moment";
 import { ref, watchEffect } from "vue";
 import {
-  QuestionControllerService,
-  QuestionQueryRequest,
   QuestionSubmitControllerService,
   QuestionSubmitQueryRequest,
-  QuestionSubmitVO,
 } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
@@ -98,7 +95,6 @@ const loadData = async () => {
   if (res.code === 0) {
     questionSubmitList.value = res.data?.records ?? [];
     total.value = res.data?.total ?? 0;
-    console.log("加载成功", questionSubmitList.value);
   } else {
     Message.error("加载数据失败，" + res.message);
   }

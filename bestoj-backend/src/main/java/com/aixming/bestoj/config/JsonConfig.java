@@ -27,4 +27,8 @@ public class JsonConfig {
         objectMapper.registerModule(module);
         return objectMapper;
     }
+
+    public static void main(String[] args) {
+        System.out.println(60 * 60 * 24);
+    }
 }
