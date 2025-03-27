@@ -10,7 +10,6 @@ export type QuestionVO = {
     title?: string;
     content?: string;
     tags?: Array<string>;
-    answer?: string;
     submitNum?: number;
     acceptedNum?: number;
     judgeCase?: Array<JudgeCase>;
@@ -19,7 +18,6 @@ export type QuestionVO = {
     favourNum?: number;
     userId?: number;
     createTime?: string;
-    updateTime?: string;
     isDelete?: number;
     user?: UserVO;
 };

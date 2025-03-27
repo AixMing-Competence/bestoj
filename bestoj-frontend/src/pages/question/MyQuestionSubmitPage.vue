@@ -38,13 +38,6 @@
       <template #createTime="{ record }">
         {{ moment(record).format("YYYY-MM-DD") }}
       </template>
-      <template #optional="{ record }">
-        <a-space>
-          <a-button @click="doDelete(record.id)" type="outline" status="danger">
-            删除
-          </a-button>
-        </a-space>
-      </template>
     </a-table>
   </div>
 </template>
@@ -53,14 +46,13 @@
 import moment from "moment/moment";
 import { ref, watchEffect } from "vue";
 import {
-  QuestionSubmit,
   QuestionSubmitControllerService,
   QuestionSubmitQueryRequest,
+  QuestionSubmitVO,
 } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
-import { useRouter } from "vue-router";
 
-const questionSubmitList = ref<QuestionSubmit[]>([]);
+const questionSubmitList = ref<QuestionSubmitVO[]>([]);
 
 /**
  * 分页参数
@@ -87,19 +79,11 @@ const doSearch = () => {
  * 加载数据
  */
 const loadData = async () => {
-  const res = await QuestionSubmitControllerService.listQuestionSubmitByPage(
-    searchParams.value
-  );
-  if (res.code === 0) {
-    // 判断当前要查的页数有没有数据
-    const pageTotal = Math.ceil(
-      (res.data?.total ?? 0) / (searchParams.value.pageSize ?? 1)
+  const res =
+    await QuestionSubmitControllerService.listMyQuestionSubmitVoByPage(
+      searchParams.value
     );
-    if (pageTotal > 0 && pageTotal < (searchParams.value.current as any)) {
-      searchParams.value.current = pageTotal;
-      loadData();
-      return;
-    }
+  if (res.code === 0) {
     questionSubmitList.value = res.data?.records ?? [];
     total.value = res.data?.total ?? 0;
   } else {
@@ -113,18 +97,6 @@ const loadData = async () => {
 watchEffect(() => {
   loadData();
 });
-
-const doDelete = async (id: string) => {
-  const res = await QuestionSubmitControllerService.deleteQuestionSubmit({
-    id: id as any,
-  });
-  if (res.code === 0) {
-    Message.success("删除成功");
-    loadData();
-  } else {
-    Message.error("删除失败，" + res.message);
-  }
-};
 
 /**
  * 切换分页的时候会触发数据的重新加载
@@ -164,17 +136,9 @@ const columns = [
     dataIndex: "questionId",
   },
   {
-    title: "用户 id",
-    dataIndex: "userId",
-  },
-  {
     title: "创建时间",
     dataIndex: "createTime",
     slotName: "createTime",
-  },
-  {
-    title: "操作",
-    slotName: "optional",
   },
 ];
 </script>

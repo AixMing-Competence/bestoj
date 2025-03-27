@@ -54,7 +54,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         String title = question.getTitle();
         // 创建数据时，参数不能为空
         if (add) {
-            ThrowUtils.throwIf(StringUtils.isBlank(title), ErrorCode.PARAMS_ERROR);
+            ThrowUtils.throwIf(StringUtils.isBlank(title), ErrorCode.PARAMS_ERROR,"标题不能为空");
         }
         // 修改数据时，有参数则校验
         if (StringUtils.isNotBlank(title)) {

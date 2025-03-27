@@ -10,9 +10,22 @@ import DoQuestionPage from "@/pages/question/doQuestionPage.vue";
 import QuestionSubmitPage from "@/pages/question/QuestionSubmitPage.vue";
 import NoAuth from "@/pages/auth/NoAuth.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
+import MyQuestionSubmitPage from "@/pages/question/MyQuestionSubmitPage.vue";
 
 export const routes = [
-  { path: "/", name: "主页", component: HomePage },
+  {
+    path: "/home",
+    name: "主页",
+    component: HomePage,
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/",
+    name: "题库",
+    component: QuestionViewPage,
+  },
   {
     path: "/noAuth",
     name: "无权限页面",
@@ -69,11 +82,6 @@ export const routes = [
     },
   },
   {
-    path: "/question",
-    name: "浏览题目",
-    component: QuestionViewPage,
-  },
-  {
     path: "/question/description/:id",
     name: "做题页面",
     component: DoQuestionPage,
@@ -84,16 +92,19 @@ export const routes = [
     },
   },
   {
-    path: "/question_submit",
-    name: "浏览题目并提交",
+    path: "/question_submit/all",
+    name: "所有提交",
     component: QuestionSubmitPage,
     meta: {
-      access: ACCESS_ENUM.USER,
+      access: ACCESS_ENUM.ADMIN,
     },
   },
   {
-    path: "/test",
-    name: "测试页面",
-    component: ExamplePage,
+    path: "/question_submit/my",
+    name: "我的提交",
+    component: MyQuestionSubmitPage,
+    meta: {
+      access: ACCESS_ENUM.USER,
+    },
   },
 ];

@@ -102,4 +102,4 @@ knife4j:
   setting:
     language: zh_cn
 codesandbox:
-  type: com.aixming.bestoj.judge.codesandbox.impl.RemoteCodeSandbox
+  type: com.aixming.bestoj.judge.codesandbox.impl.JavaNativeCodeSandbox

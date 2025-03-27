@@ -1,7 +1,6 @@
 <template>
   <div id="viewQuestionPage">
-    <h2>搜索题目</h2>
-    {{ searchParams }}
+    <h2 style="margin-bottom: 32px">搜索题目</h2>
     <a-form :model="searchParams" @submit="doSearch" layout="inline">
       <a-form-item field="title" label="标题" style="min-width: 240px">
         <a-input v-model="searchParams.title" placeholder="请输入标题" />
@@ -27,12 +26,7 @@
     >
       <template #tags="{ record }">
         <a-space wrap>
-          <a-tag
-            v-for="(tag, index) in record.tags"
-            :key="index"
-            color="green"
-            closable
-          >
+          <a-tag v-for="(tag, index) in record.tags" :key="index" color="green">
             {{ tag }}
           </a-tag>
         </a-space>

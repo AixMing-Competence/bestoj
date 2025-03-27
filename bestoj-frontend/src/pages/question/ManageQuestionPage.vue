@@ -18,7 +18,6 @@
             v-for="(tag, index) in JSON.parse(record.tags)"
             :key="index"
             color="green"
-            closable
           >
             {{ tag }}
           </a-tag>
@@ -189,6 +188,5 @@ const columns = [
 <style scoped>
 #manageQuestionPage {
   margin: 0 auto;
-  max-width: 1200px;
 }
 </style>

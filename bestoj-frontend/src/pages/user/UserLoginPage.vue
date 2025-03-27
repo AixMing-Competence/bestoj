@@ -1,6 +1,6 @@
 <template>
   <div id="userLoginPage">
-    <h1>用户登录页</h1>
+    <h1>用户登录</h1>
     <a-form
       :model="form"
       style="width: 400px; margin: 0 auto"
@@ -11,16 +11,25 @@
       <a-form-item field="userAccount" label="账号">
         <a-input v-model="form.userAccount" placeholder="请输入账号" />
       </a-form-item>
-      <a-form-item field="userPassword" tooltip="密码不少于8位" label="密码">
+      <a-form-item field="userPassword" label="密码">
         <a-input-password
           v-model="form.userPassword"
           placeholder="请输入密码"
         />
       </a-form-item>
-      <a-form-item>
-        <a-button html-type="submit" style="width: 120px" type="primary">
-          Submit
-        </a-button>
+      <a-form-item no-style>
+        <div class="bottom-button-wrapper">
+          <a-button html-type="submit" style="width: 120px" type="primary">
+            登录
+          </a-button>
+          <a-button
+            type="outline"
+            style="width: 120px"
+            @click="router.push('/user/register')"
+          >
+            去注册
+          </a-button>
+        </div>
       </a-form-item>
     </a-form>
   </div>
@@ -62,5 +71,10 @@ const handleSubmit = async () => {
 
 <style scoped>
 #userLoginPage {
+}
+
+.bottom-button-wrapper {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>

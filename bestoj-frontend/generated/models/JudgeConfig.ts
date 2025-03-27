@@ -7,3 +7,4 @@ export type JudgeConfig = {
     memoryLimit?: number;
     stackLimit?: number;
 };
+

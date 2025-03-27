@@ -1,10 +1,15 @@
 <template>
-  <Editor :value="value" :plugins="plugins" @change="handleChange" />
+  <Editor
+    :value="value"
+    :mode="mode"
+    :plugins="plugins"
+    @change="handleChange"
+  />
 </template>
 
 <script lang="ts" setup>
-import gfm from "@bytemd/plugin-gfm";
 import { Editor } from "@bytemd/vue-next";
+import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import { defineProps, ref, withDefaults } from "vue";
 

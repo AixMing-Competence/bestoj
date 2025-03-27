@@ -1,12 +1,23 @@
 <template>
   <div id="addQuestionPage">
     <h2 style="margin-bottom: 32px">设置题目</h2>
-    <a-form :model="form" @submit="handleSubmit">
+    <a-form
+      :model="form"
+      @submit="handleSubmit"
+      :content-flex="false"
+      :merge-props="false"
+      label-align="left"
+      auto-label-width
+    >
       <a-form-item field="id" label="题目 id">
         {{ form.id }}
       </a-form-item>
-      <a-form-item field="title" label="题目">
-        <a-input v-model="form.title" placeholder="请输入标题"></a-input>
+      <a-form-item field="title" label="标题">
+        <a-input
+          v-model="form.title"
+          placeholder="请输入标题"
+          style="width: 400px"
+        ></a-input>
       </a-form-item>
       <a-form-item field="content" label="内容">
         <MdEditor :value="form.content" :handle-change="onContentChange" />
@@ -15,7 +26,12 @@
         <MdEditor :value="form.answer" :handle-change="onAnswerChange" />
       </a-form-item>
       <a-form-item field="tags" label="标签">
-        <a-input-tag v-model="form.tags" placeholder="请输入标签" allow-clear />
+        <a-input-tag
+          v-model="form.tags"
+          style="width: 400px"
+          placeholder="请输入标签"
+          allow-clear
+        />
       </a-form-item>
       <a-form-item label="判题配置">
         <a-space direction="vertical" style="min-width: 400px">
@@ -54,29 +70,29 @@
           :key="index"
           no-style
         >
-          <a-space
-            direction="vertical"
-            style="min-width: 420px; margin-bottom: 16px"
+          <a-form-item
+            :label="`输入样例-${index + 1}`"
+            style="max-width: 420px"
           >
-            <a-form-item :label="`输入样例-${index + 1}`">
-              <a-input
-                v-model="judgeCaseItem.input"
-                placeholder="请输入测试输入样例"
-              />
-            </a-form-item>
-            <a-form-item
-              :field="`form.judgeCase[${index}].output`"
-              :label="`输出样例-${index + 1}`"
-            >
-              <a-input
-                v-model="judgeCaseItem.output"
-                placeholder="请输入测试输出样例"
-              />
-            </a-form-item>
-            <a-button status="danger" @click="handleDelete(index as any)">
-              删除
-            </a-button>
-          </a-space>
+            <a-input
+              v-model="judgeCaseItem.input"
+              placeholder="请输入测试输入样例"
+            />
+          </a-form-item>
+          <a-form-item
+            :field="`form.judgeCase[${index}].output`"
+            :label="`输出样例-${index + 1}`"
+            style="max-width: 420px"
+          >
+            <a-input
+              v-model="judgeCaseItem.output"
+              placeholder="请输入测试输出样例"
+            />
+          </a-form-item>
+          <a-button status="danger" @click="handleDelete(index as any)">
+            删除
+          </a-button>
+          <div style="margin-bottom: 16px"></div>
         </a-form-item>
         <div style="margin-top: 16px">
           <a-button @click="handleAdd" type="outline" status="success">
@@ -84,12 +100,10 @@
           </a-button>
         </div>
       </a-form-item>
-      <div style="margin-top: 16px"></div>
       <a-form-item>
         <a-button html-type="submit" type="primary"> 提交</a-button>
       </a-form-item>
     </a-form>
-    {{ form }}
   </div>
 </template>
 
@@ -114,7 +128,11 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const form = ref<QuestionAddRequest>({
-  judgeConfig: {},
+  judgeConfig: {
+    timeLimit: 1000,
+    memoryLimit: 1000,
+    stackLimit: 1000,
+  },
   judgeCase: [],
 });
 
@@ -202,5 +220,7 @@ const onAnswerChange = (v: string) => {
 
 <style scoped>
 #addQuestionPage {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 </style>
